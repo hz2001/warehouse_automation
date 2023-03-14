@@ -9,3 +9,9 @@ warehouse automation requirments
 4. as a CTO, I want to use key based authentication for the application and the key is rotated once each month, so that the minimal security is assured for the data.
 
 5. as a developer, I want to use a nosql database so that we can manage unformated data easily.
+
+
+questions: 
+1. swagger cannot fetch the content
+2. what does the post api look like 
+3. 
