@@ -6,14 +6,23 @@ import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography
  */
 import {BASE_API_URL, CLASS_METHODS, GET_DEFAULT_HEADERS, MY_BU_ID, SEMESTER} from "./globals";
 import {IData, IUniversityClass} from "./types/api_types";
-import {GradeTable} from "./components/GradeTable";
-import {calcAllFinalGrade} from "./utils/calculate_grade";
+import {ShippingDataTable} from "./components/GradeTable";
+// import {calcAllFinalGrade} from "./utils/calculate_grade";
+
+// ass4 imports 
+import { TOKEN_GET, TOKEN_POST, SHIPPING_ITEM_METHODS,BASE_API_URL_SHIPPINGDATA,GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA } from "./globals";
+import { IShippingData } from "./types/api_types";
 
 function App() {
   // You will need to use more of these!
   const [currClassId, setCurrClassId] = useState<string>("");
   const [classList, setClassList] = useState<IUniversityClass[]>([]);
+  // const [data, setData] = useState<IData[]>([]);
   const [data, setData] = useState<IData[]>([]);
+
+  //ass4 useState
+  const [ShippingData, setShippingData] = useState<IShippingData[]>([]);
+  const [currentShipperID, setShipperID] = useState<string>("");
   /**
    * This is JUST an example of how you might fetch some data(with a different API).
    * As you might notice, this does not show up in your console right now.
@@ -29,31 +38,50 @@ function App() {
    *
    */
 
-  const getClassesBySemester = async (semester: string) => {
-    const res = await fetch(BASE_API_URL + CLASS_METHODS["getClassesBySemester"] + semester + MY_BU_ID, {
+  const Shippers = ["Duan", "Zhang", "Jimmy"];
+  const getItemsByShipperID = async (ShipperID: string) => {
+    const res = await fetch(BASE_API_URL_SHIPPINGDATA + SHIPPING_ITEM_METHODS.getByShipperID + "code=" + TOKEN_GET + "&ShipperID=" + ShipperID, {
       method: "GET",
-      headers: GET_DEFAULT_HEADERS(),
+      headers: GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA(),
     });
     return await res.json()
   };
 
   useEffect ( () => {
-    getClassesBySemester(SEMESTER).then((classes)=>setClassList(classes));
-    calcAllFinalGrade(currClassId).then(res => {
-      // console.log("app, after calcAllFinalGrade()", res)
-      setData(res)
-    });
-  }, [currClassId]);
+    getItemsByShipperID(currentShipperID).then((data:IShippingData[]) => {
+      let fetched_data:IShippingData[] = [];
+      console.log(data);
 
-  // call get class to load the names to classList
-  // RESOLVED: why does it keep make api calls? set deps = [] makes it make only 1 api call
+      for (let i = 0; i < data.length; i++){
+        let temp: IShippingData = {  
+          id: data[i].id,
+          Date: data[i].Date,
+          WarehouseID: data[i].WarehouseID,
+          ShippingPO: data[i].ShippingPO,
+          ShipmentID: data[i].ShipmentID,
+          BoxesRcvd: data[i].BoxesRcvd,
+          ShipperID: data[i].ShipperID};
+        fetched_data.push(temp);
+        console.log(fetched_data);
+      }
+      
+      setShippingData(fetched_data)}
+    )
+    
+    // calcAllFinalGrade(currClassId).then(res => {
+    //   // console.log("app, after calcAllFinalGrade()", res)
+    //   setData(res)
+    // });
+  }, [currentShipperID]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    var classValue: string = event.target.value;
-    setCurrClassId(classValue);
+    var ShipperID: string = event.target.value;
+    console.log("ShipperID",ShipperID);
+    setShipperID(ShipperID);
     // console.log("current class", currClassId);
   };
 
+  
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -65,17 +93,17 @@ function App() {
         </Grid>
         <Grid xs={12} md={4}>
           <Typography variant="h4" gutterBottom>
-            Select a class
+            Select a shipper name:
           </Typography>
 
           <div style={{ width: "100%" }}>
             <FormControl variant="standard" sx={{ m:1, minWidth: 300 }}>
-            <InputLabel id="demo-simple-select-standard-label">Class</InputLabel>
-            <Select fullWidth={true} label="Class" onChange={handleChange} defaultValue='' >
-              <MenuItem value="" disabled selected>Classes</MenuItem>
-              {classList.map((option, index) => {
-                return <MenuItem value={option.classId} key={option.classId} >
-                  {option.title}
+            <InputLabel id="demo-simple-select-standard-label">Shipper Name</InputLabel>
+            <Select fullWidth={true} label="ShipperID" onChange={handleChange} defaultValue='' >
+              <MenuItem value="" disabled selected>Name</MenuItem>
+              {Shippers.map((option, index) => {
+                return <MenuItem value={option} key={option} >
+                  {option}
                 </MenuItem>
 
               })}
@@ -85,9 +113,9 @@ function App() {
         </Grid>
         <Grid xs={12} md={8}>
           <Typography variant="h4" gutterBottom>
-            Final Grades
+            Data Log
           </Typography>
-          {GradeTable(data)}
+          {ShippingDataTable(ShippingData)}
         </Grid>
       </Grid>
     </div>

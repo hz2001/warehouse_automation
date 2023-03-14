@@ -50,3 +50,38 @@ export interface IData {
   semester: string,
   finalGrade: number
 }
+
+
+// ass 4
+
+export interface IShippingData {
+  id: string,
+  Date: string,
+  WarehouseID: string,
+  ShippingPO: string,
+  ShipmentID: string,
+  BoxesRcvd: string,
+  ShipperID: string
+  // ,
+  // _rid: string,
+  // _self: string,
+  // _etag: string,
+  // _attachments: string,
+  // _ts: number
+}
+
+// {
+//   "id": "1",
+//   "Date": "Sep 1, 2023",
+//   "WarehouseID": "a908cef7-4c67-40f3-88f7-08a03ba4104e",
+//   "ShippingPO": "81d06bd2-39e3-427c-9fb3-4e217b9a4d60",
+//   "ShipmentID": "100",
+//   "BoxesRcvd": "100",
+//   "ShipperID": "Zhang",
+//   "partitionKey": "ass4item",
+//   "_rid": "ldVkAP0fhCQKAAAAAAAAAA==",
+//   "_self": "dbs/ldVkAA==/colls/ldVkAP0fhCQ=/docs/ldVkAP0fhCQKAAAAAAAAAA==/",
+//   "_etag": "\"7e0094ac-0000-0100-0000-640fce9a0000\"",
+//   "_attachments": "attachments/",
+//   "_ts": 1678757530
+// }
