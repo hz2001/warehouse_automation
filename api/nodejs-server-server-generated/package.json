@@ -1,0 +1,20 @@
+{
+  "name": "ass4herbertapi-swagger-api",
+  "version": "1.0.0",
+  "description": "This is the swagger page for Herbert's api for DS519 assignment 4",
+  "main": "index.js",
+  "scripts": {
+	"prestart": "npm install",
+	"start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "oas3-tools": "^2.2.3"
+  }
+}
