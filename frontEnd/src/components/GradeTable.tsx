@@ -1,5 +1,5 @@
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import {IData} from "../types/api_types";
+import {IShippingData} from "../types/api_types";
 
 /**
  * You might find it useful to have some dummy data for your own testing.
@@ -8,84 +8,123 @@ import {IData} from "../types/api_types";
  * When you come to office hours for help, we will ask you if you have written
  * this function and tested your project using it.
  */
-export function dummyData() {
 
-  return [
-    { id: "1", studentName : '1', classId: 'Jon', semester: "2022Fall", finalGrade: 100.0 },
-    { id: "2", studentName: '2', classId: 'Cersei', semester: "2022Fall", finalGrade: 100.0},
-    { id: "3", studentName: '3', classId: 'Jaime', semester: "2022Fall" , finalGrade: 100.0},
-    { id: "4", studentName: '4', classId: 'Arya', semester: "2022Fall", finalGrade: 100.0 },
-  ];
-    // ,
-    // [
-    //   { id: 5, studentName : '5', classId: 'Jon', semester: "2022Fall", finalGrade: 100.0 },
-    //   { id: 6, studentName: '6', classId: 'Cersei', semester: "2022Fall", finalGrade: 100.0},
-    //   { id: 7, studentName: '7', classId: 'Jaime', semester: "2022Fall" , finalGrade: 100.0},
-    //   { id: 8, studentName: '8', classId: 'Arya', semester: "2022Fall", finalGrade: 100.0 },
-    // ]
-}
-/**
- * This is the component where you should write the code for displaying the
- * the table of grades.
- *
- * You might need to change the signature of this function.
- *
- */
-export const GradeTable = (
-    data: IData[]) => {
-  const columns: GridColDef[] = [
-    { field: 'id',
-      headerName: 'Student ID',
-      minWidth: 120,
-      flex:1,
-      align: "center"},
 
-    { field: 'studentName',
-      headerName: 'Student Name',
-      minWidth: 150,
-      flex:1,
-      align: "center"},
+// export interface IShippingData {
+//   id: string,
+//   date: string,
+//   WarehouseID: string,
+//   ShippingPO: string,
+//   ShipmentID: string,
+//   BoxesRcvd: string,
+//   ShipperID: string,
+//   _rid: string,
+//   _self: string,
+//   _etag: string,
+//   _attachments: string,
+//   _ts: number
+// }
+export const ShippingDataTable = (
+  data: IShippingData[]) => {
+const columns: GridColDef[] = [
+  { field: 'id',
+    headerName: 'Item ID',
+    minWidth: 100,
+    flex:1,
+    align: "center"},
 
-    { field: 'classId',
-      headerName: 'Class ID',
-      minWidth: 100,
-      flex:1,
-      align: "center" },
-    {field: 'className',
-      headerName: 'Class Name',
-      type: 'string',
-      minWidth: 100,
-      flex:1,
-      align: "center"},
+  { field: 'Date',
+    headerName: 'Date Shipped',
+    minWidth: 100,
+    flex:1,
+    align: "center"},
 
-    {field: 'semester',
-      headerName: 'Semester',
-      type: 'string',
-      minWidth: 100,
-      flex:1,
-      align: "center"},
+  { field: 'WarehouseID',
+    headerName: 'WarehouseID',
+    minWidth: 100,
+    flex:1,
+    align: "center" },
+  {field: 'ShippingPO',
+    headerName: 'ShippingPO',
+    type: 'string',
+    minWidth: 100,
+    flex:1,
+    align: "center"},
 
-    {
-      field: 'finalGrade',
-      headerName: 'Final Grade',
-      type: "float",
-      width: 120,
-      align: "center",
-      flex:1,
-      // valueGetter: (params: GridValueGetterParams) =>
-      //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
-  ];
-  // dummyData()[]
-  // const rows = data
+  {field: 'ShipmentID',
+    headerName: 'ShipmentID',
+    type: 'string',
+    minWidth: 50,
+    flex:1,
+    align: "center"},
 
-  return (<div style={{ height: 400, width: '100%' }}>
-    <DataGrid
-        rows={data}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-    />
-  </div>);
+  {
+    field: 'BoxesRcvd',
+    headerName: 'BoxesRcvd',
+    type: "string",
+    width: 50,
+    align: "center",
+    flex:1
+  },
+  {
+    field: 'ShipperID',
+    headerName: 'ShipperID',
+    type: "string",
+    width: 100,
+    align: "center",
+    flex:1
+  }
+  // ,
+  // {
+  //   field: '_rid',
+  //   headerName: '_rid',
+  //   type: "string",
+  //   width: 10,
+  //   align: "center",
+  //   flex:1
+  // },
+  // {
+  //   field: '_self',
+  //   headerName: '_self',
+  //   type: "string",
+  //   width: 10,
+  //   align: "center",
+  //   flex:1
+  // },
+  // {
+  //   field: '_etag',
+  //   headerName: '_etag',
+  //   type: "string",
+  //   width: 10,
+  //   align: "center",
+  //   flex:1
+  // },
+  // {
+  //   field: '_attachments',
+  //   headerName: '_attachments',
+  //   type: "string",
+  //   width: 10,
+  //   align: "center",
+  //   flex:1
+  // },
+  // {
+  //   field: '_ts',
+  //   headerName: '_ts',
+  //   width: 10,
+  //   align: "center",
+  //   flex:1
+  // }
+];
+// dummyData()[]
+// const rows = data
+
+return (<div style={{ height: 400, width: '100%' }}>
+  <DataGrid
+      rows={data}
+      columns={columns}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
+      checkboxSelection
+  />
+</div>);
 };
