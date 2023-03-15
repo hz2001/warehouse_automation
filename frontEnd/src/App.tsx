@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography} from "@mui/material";
 /**
  * You will find globals from this file useful!
  */
-import {BASE_API_URL, CLASS_METHODS, GET_DEFAULT_HEADERS, MY_BU_ID, SEMESTER} from "./globals";
-import {IData, IUniversityClass} from "./types/api_types";
+// import {BASE_API_URL, CLASS_METHODS, GET_DEFAULT_HEADERS, MY_BU_ID, SEMESTER} from "./globals";
+// import {IData, IUniversityClass} from "./types/api_types";
 import {ShippingDataTable} from "./components/GradeTable";
 // import {calcAllFinalGrade} from "./utils/calculate_grade";
 
 // ass4 imports 
-import { TOKEN_GET, TOKEN_POST, SHIPPING_ITEM_METHODS,BASE_API_URL_SHIPPINGDATA,GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA } from "./globals";
+import { TOKEN_GET, SHIPPING_ITEM_METHODS,BASE_API_URL_SHIPPINGDATA,GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA } from "./globals";
 import { IShippingData } from "./types/api_types";
 
 function App() {
   // You will need to use more of these!
-  const [currClassId, setCurrClassId] = useState<string>("");
-  const [classList, setClassList] = useState<IUniversityClass[]>([]);
+  // const [currClassId, setCurrClassId] = useState<string>("");
+  // const [classList, setClassList] = useState<IUniversityClass[]>([]);
   // const [data, setData] = useState<IData[]>([]);
-  const [data, setData] = useState<IData[]>([]);
+  // const [data, setData] = useState<IData[]>([]);
 
   //ass4 useState
   const [ShippingData, setShippingData] = useState<IShippingData[]>([]);
@@ -62,7 +62,7 @@ function App() {
           BoxesRcvd: data[i].BoxesRcvd,
           ShipperID: data[i].ShipperID};
         fetched_data.push(temp);
-        console.log(fetched_data);
+        // console.log(fetched_data);
       }
       
       setShippingData(fetched_data)}
