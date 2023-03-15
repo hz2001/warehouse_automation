@@ -19,14 +19,6 @@ paths:
       description: Returns all shipped item from the given ShipperID
       operationId: findShippingItemsByShipperID
       parameters:
-      - name: code
-        in: query
-        description: authentication key
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
       - name: ShipperID
         in: query
         description: ShipperID that the shipped items was at
@@ -53,6 +45,8 @@ paths:
                   $ref: '#/components/schemas/ShippingItems'
         "404":
           description: no items found
+      security:
+        - code: []
       x-swagger-router-controller: ShippingItemGet
   /shippingItemPost:
     post:
@@ -60,225 +54,36 @@ paths:
       - shippingItemPost
       summary: Updates shippingItems by ShipperID
       description: Returns all shipped item from the given ShipperID
-      operationId: CreateShippingItem
-      parameters:
-      - name: code
-        in: query
-        description: authentication key
+      operationId: postShippingItem
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingItems'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ShippingItems'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingItems'
         required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: Date
-        in: query
-        description: Date that the item is shipped 
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: Sep 1, 2023
-      - name: WarehouseID
-        in: query
-        description: Warehouse that the shipped items was from
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: a908cef7-4c67-40f3-88f7-08a03ba4104e
-          
-      - name: ShippingPO
-        in: query
-        description: ShippingPO that the shipped items was at
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: 81d06bd2-39e3-427c-9fb3-4e217b9a4d60
-          
-      - name: ShipmentID
-        in: query
-        description: ShipmentID that the shipped items has, unique value
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: 1234
-      - name: BoxesRcvd
-        in: query
-        description: number of boxes that has shipped
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: 100
-      - name: ShipperID
-        in: query
-        description: ShipperID that the shipped items was at
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: Zhang
-
       responses:
         "200":
           description: successful operation
           content:
-            text/plain:
-              schema:
-                type: string
-                example: "Hello. This HTTP triggered function executed successfully, item pushed onto database warehouse_shippingData"
-                
             application/json:
               schema:
                 type: string
-                example: "Hello. This HTTP triggered function executed successfully, item pushed onto database warehouse_shippingData"
-                
-        "401":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                type: string
-                example: "Pass a name in the query string or in the request body to update the database"
+                example: Hello. This HTTP triggered function executed successfully, item pushed onto database warehouse_shippingData
+                x-content-type: application/json
             
-      x-swagger-router-controller: ShippingItemPost
-  /shippingItem:
-    get:
-      tags:
-      - shippingItemGet
-      summary: Finds shippingItems by ShipperID
-      description: Returns all shipped item from the given ShipperID
-      operationId: ShippingItemGet
-      parameters:
-      - name: code
-        in: query
-        description: authentication key
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: ShipperID
-        in: query
-        description: ShipperID that the shipped items was at
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: Zhang
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ShippingItems'
-                x-content-type: application/json
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ShippingItems'
-        "404":
-          description: no items found
-      x-swagger-router-controller: ShippingItemGet
-    post:
-      tags:
-      - shippingItemPost
-      summary: Updates shippingItems by ShipperID
-      description: Returns all shipped item from the given ShipperID
-      operationId: ShippingItemPost
-      parameters:
-      - name: code
-        in: query
-        description: authentication key
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: Date
-        in: query
-        description: Date that the item is shipped 
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: Sep 1, 2023
-      - name: WarehouseID
-        in: query
-        description: Warehouse that the shipped items was from
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: a908cef7-4c67-40f3-88f7-08a03ba4104e
-          
-      - name: ShippingPO
-        in: query
-        description: ShippingPO that the shipped items was at
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: 81d06bd2-39e3-427c-9fb3-4e217b9a4d60
-          
-      - name: ShipmentID
-        in: query
-        description: ShipmentID that the shipped items has, unique value
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: 1234
-      - name: BoxesRcvd
-        in: query
-        description: number of boxes that has shipped
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: 100
-      - name: ShipperID
-        in: query
-        description: ShipperID that the shipped items was at
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: Zhang
-
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: string
-                x-content-type: application/json
-            application/xml:
-              schema:
-                type: string
         "404":
           description: Invalid input
+      security:
+        - code: []
       x-swagger-router-controller: ShippingItemPost
+  
 components:
   schemas:
     ShippingItems:
@@ -338,5 +143,5 @@ components:
   securitySchemes:
     code:
       type: apiKey
-      name: AzureFunctionKey
+      name: code
       in: query
