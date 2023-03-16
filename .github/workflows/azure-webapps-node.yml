@@ -48,7 +48,7 @@ jobs:
         npm install
         npm run build --if-present
         npm run test --if-present
-        npm -rm ./node_modules
+        rm -r node_modules
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
