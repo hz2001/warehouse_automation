@@ -36,13 +36,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ShippingItems'
+                  $ref: '#/components/schemas/ShippingItem'
                 x-content-type: application/json
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ShippingItems'
+                  $ref: '#/components/schemas/ShippingItem'
         "404":
           description: no items found
       security:
@@ -56,17 +56,20 @@ paths:
       description: Returns all shipped item from the given ShipperID
       operationId: postShippingItem
       requestBody:
-        description: Create a new pet in the store
+        description: Create new items in the store
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShippingItems'
+              oneOf:
+                - $ref: '#/components/schemas/PostDocument'
+                - $ref: '#/components/schemas/ShippingItem' 
+                # - $ref: '#/components/schemas/ShippingItemsFull' 
           application/xml:
             schema:
-              $ref: '#/components/schemas/ShippingItems'
+              $ref: '#/components/schemas/ShippingItem'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ShippingItems'
+              $ref: '#/components/schemas/ShippingItem'
         required: true
       responses:
         "200":
@@ -86,7 +89,7 @@ paths:
   
 components:
   schemas:
-    ShippingItems:
+    ShippingItem:
       type: object
       properties:
         id:
@@ -130,16 +133,38 @@ components:
       example:
         ShipmentID: "5"
         ShippingPO: 81d06bd2-39e3-427c-9fb3-4e217b9a4d60
-        _attachments: attachments/
-        _rid: ldVkAP0fhCQGAAAAAAAAAA==
-        id: "10"
+        BoxesRcvd: "12"
         WarehouseID: a908cef7-4c67-40f3-88f7-08a03ba4104a
-        _self: dbs/ldVkAA==/colls/ldVkAP0fhCQ=/docs/ldVkAP0fhCQGAAAAAAAAAA==/
         ShipperID: Duan
         Date: "Mar 9, 2022"
-        _etag: \\"7e007215-0000-0100-0000-640e84690000\\"
-        BoxesRcvd: "12"
-        _ts: 1678673001
+        # _attachments: attachments/
+        # _rid: ldVkAP0fhCQGAAAAAAAAAA==
+        # id: "10"
+        # _self: dbs/ldVkAA==/colls/ldVkAP0fhCQ=/docs/ldVkAP0fhCQGAAAAAAAAAA==/
+        # _etag: \\"7e007215-0000-0100-0000-640e84690000\\"
+        # _ts: 1678673001
+      required:
+        - Date
+        - WarehouseID
+        - ShippingPO
+        - ShipmentID
+        - ShipperID
+        - BoxesRcvd
+        
+    PostDocument:
+      type: object
+      properties:
+        Received:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingItem' 
+      # example:
+      #   Received: 
+      #     items:
+      #       $ref: '#/components/schemas/ShippingItem' 
+          
+
+
   securitySchemes:
     code:
       type: apiKey
