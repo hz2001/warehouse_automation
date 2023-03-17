@@ -36,6 +36,8 @@ export const TOKEN_GET = "jAdIqnGd98kCahs8Vv6VL42gv2JhZNR6vUPhRC8a_TNpAzFuQTWHFA
 export const TOKEN_POST =  "uf48t-u-aHVbri72ihvMvXye07xQ5wIvUeRZO4Vo_RqpAzFux9FiZw=="
 export const BASE_API_URL_SHIPPINGDATA = "https://ds519ass4functions.azurewebsites.net/api"
 
+export const ANYONE_CAN_ACCESS = "=_="
+
 export const GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA = () => {
   var headers = new Headers();
   headers.append('accept','application/json');
