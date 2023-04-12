@@ -1,8 +1,8 @@
 import os
 
 settings = {
-    'host': os.environ.get('ACCOUNT_HOST', 'https://ds519zhang.documents.azure.com:443/'),
-    'master_key': os.environ.get('ACCOUNT_KEY', 'ywTl8cDhHkbYETziizjqsxTt31y3ohg1T6zLBfWgtJOkGq2eG69Sov8h8KwP2nXaodnW3qVkcoshACDbc4vFMA=='),
+    'host': os.environ.get('ACCOUNT_HOST', 'https://ds519assignment4-db.documents.azure.com:443/'),
+    'master_key': os.environ.get('ACCOUNT_KEY', 'PiZqphbzQdW0YrSqnNq7TVjeT6bypZfOV8wyBUICfXxymjbpXdKrTNmadsU7l1U9kdZNIoUdJ5jIACDbDrmv8Q=='),
     'database_id': os.environ.get('COSMOS_DATABASE', 'warehouse'),
     'container_id': os.environ.get('COSMOS_CONTAINER', 'shippingData')
 }

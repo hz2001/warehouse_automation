@@ -32,9 +32,9 @@ export const STUDENT_METHODS = {
 
 
 // ass 4 
-export const TOKEN_GET = "zz2Jj5KKJUmi1h-If9iaSpe1p3JTIvIs7QA8P7REtVeFAzFu1irh_w=="
-export const TOKEN_POST =  "uf48t-u-aHVbri72ihvMvXye07xQ5wIvUeRZO4Vo_RqpAzFux9FiZw=="
-export const BASE_API_URL_SHIPPINGDATA = "https://ds519ass4functions.azurewebsites.net/api"
+export const TOKEN_GET = "FJicRXr0SKxJws1tg6yFK14n35l-_-iblxAktWWG4AQMAzFu68AHKQ==" // key for DS519Assignment4_2.0 Azure function app: "getItems"
+export const TOKEN_POST =  "it_Qyu7DsKfL91lBRLVuCXKfKdrHDZSTL6XkJ6wZPMRBAzFufHQJbw==" // key for DS519Assignment4_2.0 Azure function app: "postItems"
+export const BASE_API_URL_SHIPPINGDATA = "https://ds519assignment4functions.azurewebsites.net/api"
 
 export const GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA = () => {
   var headers = new Headers();
@@ -44,6 +44,6 @@ export const GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA = () => {
 };
 
 export const SHIPPING_ITEM_METHODS = {
-  getByShipperID: "/shippingItemGet?" ,
-  PostNewItem: "/shippingItemPost"
+  getByShipperID: "/getItems?" ,
+  PostNewItem: "/postItems"
 };
