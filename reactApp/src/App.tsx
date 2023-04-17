@@ -37,10 +37,10 @@ function App() {
    * You will also need to explore the use of async/await.
    *
    */
-
+  const url = BASE_API_URL_SHIPPINGDATA + SHIPPING_ITEM_METHODS.getByShipperID + "&ShipperID=";
   const Shippers = ["Duan", "Zhang", "Jimmy"];
   const getItemsByShipperID = async (ShipperID: string) => {
-    const res = await fetch(BASE_API_URL_SHIPPINGDATA + SHIPPING_ITEM_METHODS.getByShipperID + "code=" + TOKEN_GET + "&ShipperID=" + ShipperID, {
+    const res = await fetch(url + ShipperID, {
       method: "GET",
       headers: GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA(),
     });
@@ -53,7 +53,7 @@ function App() {
       console.log(data);
 
       for (let i = 0; i < data.length; i++){
-        let temp: IShippingData = {  
+        let temp: IShippingData = {
           id: data[i].id,
           Date: data[i].Date,
           WarehouseID: data[i].WarehouseID,
