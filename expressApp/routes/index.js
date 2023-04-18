@@ -3,8 +3,15 @@ const path = require('path');
 // var router = express.Router();
 require('dotenv').config()
 
-TOKEN_getItems = process.env.getItem_api_key
+const TOKEN_getItems = process.env.REACT_APP_getItem_api_key
+
 const app = express();
+
+app.get('/getEnvironmentVars', (_, res) => {
+    res.json({ REACT_APP_getItem_api_key: process.env.REACT_APP_getItem_api_key })
+})
+
+
 const buildPath = path.join(__dirname, '../client/build');
 
 

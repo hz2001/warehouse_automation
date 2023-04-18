@@ -32,17 +32,20 @@ export const STUDENT_METHODS = {
 
 
 // ass 4 
-export const TOKEN_MASTER = "5o7SD6ReZD85Pefx5i6I8zOJQGiLCI-A0uFFuB-q9cYgAzFuTKjv2g==" //https://ds519assignment4functions.azurewebsites.net/api/getItems?code=5o7SD6ReZD85Pefx5i6I8zOJQGiLCI-A0uFFuB-q9cYgAzFuTKjv2g==
+async function getEnvironmentVarsFromExpress() {
+  return await fetch('/getEnvironmentVars').then((res) => res.json())
+}
+// export const TOKEN_MASTER = "5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A==" //https://ds519assignment4functions.azurewebsites.net/api/getItems?code=5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A==
 export const TOKEN_GET = "FJicRXr0SKxJws1tg6yFK14n35l-_-iblxAktWWG4AQMAzFu68AHKQ==" // key for DS519Assignment4_2.0 Azure function app: "getItems"
 export const TOKEN_POST =  "it_Qyu7DsKfL91lBRLVuCXKfKdrHDZSTL6XkJ6wZPMRBAzFufHQJbw==" // key for DS519Assignment4_2.0 Azure function app: "postItems"
 export const BASE_API_URL_SHIPPINGDATA = "https://ds519assignment4functions.azurewebsites.net/api"
 
 export const ANYONE_CAN_ACCESS = "=_="
 
-export const GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA = () => {
+export const GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA = async () => {
   var headers = new Headers();
   headers.append('accept','application/json');
-  headers.append('x-functions-key',TOKEN_MASTER);
+  headers.append('x-functions-key',await getEnvironmentVarsFromExpress());
   return headers;
 };
 
