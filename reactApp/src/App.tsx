@@ -42,7 +42,7 @@ function App() {
   const getItemsByShipperID = async (ShipperID: string) => {
     const res = await fetch(url + ShipperID, {
       method: "GET",
-      headers: GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA(),
+      headers: await GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA(),
     });
     return await res.json()
   };
