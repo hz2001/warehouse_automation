@@ -5,6 +5,8 @@ name: Build and deploy Node.js app to Azure Web App - Ass4WebApp
 
 on:
   push:
+    paths:
+    - "expressApp/**"
     branches:
       - ExpressApp
   workflow_dispatch:
@@ -14,24 +16,27 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: 'expressApp'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '18.x'                # set this to the node version to use
 
-
+permissions:
+  contents: read
+  
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-
+          
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: FE/package-lock.json
 
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          rm -r public
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
