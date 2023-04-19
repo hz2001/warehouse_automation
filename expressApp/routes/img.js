@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-}
+}-09
 
 const {
   BlobServiceClient,
@@ -8,6 +8,8 @@ const {
   newPipeline
 } = require('@azure/storage-blob');
 
+// const fetch = require('node-fetch');
+const fetch = (url) => import('node-fetch').then(({default: fetch}) => fetch(url));
 const express = require('express');
 const router = express.Router();
 const containerName1 = 'image-uploads';
@@ -78,7 +80,9 @@ router.post('/', uploadStrategy, async (req, res) => {
   const containerClient = blobServiceClient.getContainerClient(containerName2);;
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
   // generate query for the httpTrigger (what we have to pass in into the queue)
-  const image_upload_url = "https://assignment5storage1.blob.core.windows.net/image-uploads/" + blobName;
+  const blobFixed = blobName.replaceAll(" ", "%20");
+  const image_upload_url = "https://assignment5storage1.blob.core.windows.net/image-uploads/" + blobFixed;
+  const complete_url = "http://localhost:7071/api/ass5httpTrigger?image_upload_url="+image_upload_url;
   try {
     await blockBlobClient.uploadStream(await stream(),
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
@@ -86,12 +90,13 @@ router.post('/', uploadStrategy, async (req, res) => {
 
     // call the http trigger to upload the the address to queue
     // TODO: this would return an error, and we will not render the success page ?????
-    await fetch("http://localhost:7071/api/ass5httpTrigger?image_upload_url="+image_upload_url); // sync with function app QUEUEFUNCTIONAPP -> ass5httpTrigger
+    await fetch(complete_url); // sync with function app QUEUEFUNCTIONAPP -> ass5httpTrigger
     // await fetch("https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api/JobQueuePush?image_upload_url="+image_upload_url);
-    res.render('success', { message: 'File uploaded to Azure Blob storage.', status: 'queue updated along with blob.', blob: image_upload_url });
+    res.render('success', { message: 'File uploaded to Azure Blob storage.', status: 'queue updated along with blob.', blob: complete_url});
 
   } catch (err) {
-    res.render('error', { message: image_upload_url });
+    console.log("sth went wrong, fetch")
+    res.render('error', { message: complete_url+ ' \n'+ err.message});
   }
 });
 
