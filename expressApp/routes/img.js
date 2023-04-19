@@ -30,7 +30,7 @@ const blobServiceClient = new BlobServiceClient(
 );
 
 const getBlobName = originalName => {
-  // Use a random number to generate a unique file name, 
+  // Use a random number to generate a unique file name,
   // removing "0." from the start of the string.
   const identifier = Math.random().toString().replace(/0\./, '');
   return `${identifier}-${originalName}`;
@@ -43,7 +43,7 @@ router.get('/', async (req, res, next) => {
   try {
     const containerClient = blobServiceClient.getContainerClient(containerName1);
     const listBlobsResponse = await containerClient.listBlobFlatSegment();
-
+    console.log(listBlobsResponse.segment.blobItems)
     for await (const blob of listBlobsResponse.segment.blobItems) {
       console.log(`Blob: ${blob.name}`);
     }
@@ -77,14 +77,21 @@ router.post('/', uploadStrategy, async (req, res) => {
         .then(({default: intoStream}) => intoStream(req.file.buffer)); // dynamic import intoStream
   const containerClient = blobServiceClient.getContainerClient(containerName2);;
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
+  // generate query for the httpTrigger (what we have to pass in into the queue)
+  const image_upload_url = "https://assignment5storage1.blob.core.windows.net/image-uploads/" + blobName;
   try {
     await blockBlobClient.uploadStream(await stream(),
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
       { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
-    res.render('success', { message: 'File uploaded to Azure Blob storage.' });
+
+    // call the http trigger to upload the the address to queue
+    // TODO: this would return an error, and we will not render the success page ?????
+    await fetch("http://localhost:7071/api/ass5httpTrigger?image_upload_url="+image_upload_url); // sync with function app QUEUEFUNCTIONAPP -> ass5httpTrigger
+    // await fetch("https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api/JobQueuePush?image_upload_url="+image_upload_url);
+    res.render('success', { message: 'File uploaded to Azure Blob storage.', status: 'queue updated along with blob.', blob: image_upload_url });
+
   } catch (err) {
-    res.render('error', { message: err.message });
+    res.render('error', { message: image_upload_url });
   }
 });
 

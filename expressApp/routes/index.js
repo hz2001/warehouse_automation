@@ -3,7 +3,7 @@ const path = require('path');
 // var router = express.Router();
 require('dotenv').config()
 
-const TOKEN_getItems = process.env.REACT_APP_getItem_api_key
+// const TOKEN_getItems = process.env.REACT_APP_getItem_api_key
 
 const app = express();
 

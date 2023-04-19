@@ -31,9 +31,13 @@ export const STUDENT_METHODS = {
 }
 
 
-// ass 4 
+// ass 4
 async function getEnvironmentVarsFromExpress() {
-  return await fetch('/getEnvironmentVars').then((res) => res.json())
+  const res_json =  await fetch('/getEnvironmentVars').
+                  then((res) => res.json());
+  // res_json = '{REACT_APP_getItem_api_key = "5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A=="}';
+  console.log(res_json["REACT_APP_getItem_api_key"]);
+  return res_json["REACT_APP_getItem_api_key"]
 }
 // export const TOKEN_MASTER = "5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A==" //https://ds519assignment4functions.azurewebsites.net/api/getItems?code=5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A==
 export const TOKEN_GET = "FJicRXr0SKxJws1tg6yFK14n35l-_-iblxAktWWG4AQMAzFu68AHKQ==" // key for DS519Assignment4_2.0 Azure function app: "getItems"
@@ -46,6 +50,7 @@ export const GET_DEFAULT_HEADERS_FOR_SHIPPINGDATA = async () => {
   var headers = new Headers();
   headers.append('accept','application/json');
   headers.append('x-functions-key',await getEnvironmentVarsFromExpress());
+  // console.log(await getEnvironmentVarsFromExpress());
   return headers;
 };
 
