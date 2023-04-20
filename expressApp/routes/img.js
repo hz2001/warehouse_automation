@@ -89,7 +89,6 @@ router.post('/', uploadStrategy, async (req, res) => {
       { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
 
     // call the http trigger to upload the the address to queue
-    // TODO: this would return an error, and we will not render the success page ?????
     await fetch(complete_url); // sync with function app QUEUEFUNCTIONAPP -> ass5httpTrigger
     res.render('success', { message: 'File uploaded to Azure Blob storage.', status: 'queue updated along with blob.', blob: complete_url});
 
