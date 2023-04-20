@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - Ass4WebApp
+name: Build and deploy Node.js app to Azure Web App - Ass5warehouseAutomation
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: Ass4WebApp    # set this to your application's name
+  AZURE_WEBAPP_NAME: Ass5warehouseAutomation    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'expressApp'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '18.x'                # set this to the node version to use
 
@@ -30,9 +30,10 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: FE/package-lock.json
+          cache-dependency-path: expressApp/package-lock.json
 
       - name: npm install
+        working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
         run: |
           npm install
 
@@ -43,6 +44,8 @@ jobs:
           path: .
 
   deploy:
+    permissions:
+      contents: none
     runs-on: ubuntu-latest
     needs: build
     environment:
@@ -55,11 +58,10 @@ jobs:
         with:
           name: node-app
 
-      - name: 'Deploy to Azure Web App'
+      - name: 'Deploy to Azure Web App Ass5warehouseAutomation'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'Ass4WebApp'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9AC7475607614F83A57B39B5FAA2DC0A }}
-          package: .
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_ASS5WAREHOUSEAUTOMATION }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
