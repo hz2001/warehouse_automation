@@ -82,7 +82,8 @@ router.post('/', uploadStrategy, async (req, res) => {
   // generate query for the httpTrigger (what we have to pass in into the queue)
   const blobFixed = blobName.replaceAll(" ", "%20");
   const image_upload_url = "https://assignment5storage1.blob.core.windows.net/image-uploads/" + blobFixed;
-  const complete_url = "http://127.0.0.1:7071/api/ass5httpTrigger?image_upload_url="+image_upload_url;
+  const complete_url = "http://127.0.0.1:7071/api/ass5httpTrigger?image_upload_url="+image_upload_url; // for local testing, need to change for containers
+
   try {
     await blockBlobClient.uploadStream(await stream(),
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
