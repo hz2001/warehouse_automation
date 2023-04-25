@@ -1,4 +1,4 @@
-# DS519Ass4
+# DS519Ass4 + 5 front end + auto deployment
 
 This branch is for azure web app deployment. By wrapping an Express app around the React app build folder, I am able to sucessfully deploy the app onto Azure Web App.
 
