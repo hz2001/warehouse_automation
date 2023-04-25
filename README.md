@@ -4,4 +4,4 @@ This branch is for azure web app deployment. By wrapping an Express app around t
 
 The CD/CI workflow is specified in the workflow folder, and the app only redeploy when the information in the ./expressApp folder changes. 
 
-In the [./expressApp/routes]("./expressApp/routes") folder, img.js contains the working feature of Assignment 5; the client folder, which correlates to the root route, is the features from Assignment 4.
+In the [./expressApp/routes]("expressApp/routes") folder, img.js contains the working feature of Assignment 5; the client folder, which correlates to the root route, is the features from Assignment 4.
