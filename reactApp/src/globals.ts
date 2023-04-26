@@ -3,6 +3,9 @@
  * We've put a few here that we know you will need.
  * Fill in the blank for each one
  */
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
 export const MY_BU_ID = "?buid=U82392079";
 export const BASE_API_URL = "https://dscs519-assessment.azurewebsites.net/api";
 // You can get this from Piazza
@@ -33,11 +36,19 @@ export const STUDENT_METHODS = {
 
 // ass 4
 async function getEnvironmentVarsFromExpress() {
-  const res_json =  await fetch('/getEnvironmentVars').
-                  then((res) => res.json());
+  try{
+    let res_json =  await fetch('/getEnvironmentVars').
+      then((res) => res.json()); // this can only be done with express app as the server
+    console.log(res_json["REACT_APP_getItem_api_key"]);
+    return res_json["REACT_APP_getItem_api_key"]
+  }
+  catch(err){
+    console.error(err);
+    // console.log(process.env.REACT_APP_getItem_api_key);
+    return process.env.REACT_APP_getItem_api_key;
+  }
+
   // res_json = '{REACT_APP_getItem_api_key = "5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A=="}';
-  console.log(res_json["REACT_APP_getItem_api_key"]);
-  return res_json["REACT_APP_getItem_api_key"]
 }
 // export const TOKEN_MASTER = "5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A==" //https://ds519assignment4functions.azurewebsites.net/api/getItems?code=5CeIw1qjsuOgLeluWNOjHhlwQF_nQyBYr6t0E41xMS3WAzFucH5_-A==
 export const TOKEN_GET = "FJicRXr0SKxJws1tg6yFK14n35l-_-iblxAktWWG4AQMAzFu68AHKQ==" // key for DS519Assignment4_2.0 Azure function app: "getItems"
