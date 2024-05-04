@@ -1,0 +1,172 @@
+openapi: 3.0.0
+info:
+  title: Ass4HerbertAPI Swagger API
+  description: This is the swagger page for Herbert's api for DS519 assignment 4
+  version: 1.0.0
+servers:
+- url: https://ds519assignment4functions.azurewebsites.net/api
+tags:
+- name: shippingItemGet
+  description: Everything about ShippingItemsGet
+- name: shippingItemPost
+  description: Everything about shippingItemPost
+paths:
+  /getItems:
+    get:
+      tags:
+      - getItems
+      summary: Finds shippingItems by ShipperID
+      description: Returns all shipped item from the given ShipperID
+      operationId: findShippingItemsByShipperID
+      parameters:
+      - name: ShipperID
+        in: query
+        description: ShipperID that the shipped items was at
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: Zhang
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingItem'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingItem'
+        "404":
+          description: no items found
+      security:
+        - code: []
+      x-swagger-router-controller: getItems
+  /postItems:
+    post:
+      tags:
+      - postItems
+      summary: Updates shippingItems by ShipperID
+      description: Returns all shipped item from the given ShipperID
+      operationId: postItems
+      requestBody:
+        description: Create new items in the store
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/PostDocument'
+                - $ref: '#/components/schemas/ShippingItem' 
+                # - $ref: '#/components/schemas/ShippingItemsFull' 
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ShippingItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingItem'
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Hello. This HTTP triggered function executed successfully, item pushed onto database warehouse_shippingData
+                x-content-type: application/json
+            
+        "404":
+          description: Invalid input
+      security:
+        - code: []
+      x-swagger-router-controller: postItems
+  
+components:
+  schemas:
+    ShippingItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "10"
+        Date:
+          type: string
+          format: "month date, year"
+          example: "Mar 9, 2022"
+        WarehouseID:
+          type: string
+          example: a908cef7-4c67-40f3-88f7-08a03ba4104a
+        ShippingPO:
+          type: string
+          example: 81d06bd2-39e3-427c-9fb3-4e217b9a4d60
+        ShipmentID:
+          type: string
+          example: "5"
+        ShipperID:
+          type: string
+          example: Duan
+        BoxesRcvd:
+          type: string
+          example: "12"
+        _rid:
+          type: string
+          example: ldVkAP0fhCQGAAAAAAAAAA==
+        _self:
+          type: string
+          example: dbs/ldVkAA==/colls/ldVkAP0fhCQ=/docs/ldVkAP0fhCQGAAAAAAAAAA==/
+        _etag:
+          type: string
+          example: \\"7e007215-0000-0100-0000-640e84690000\\"
+        _attachments:
+          type: string
+          example: attachments/
+        _ts:
+          type: integer
+          format: int64
+          example: 1678673001
+      example:
+        ShipmentID: "5"
+        ShippingPO: 81d06bd2-39e3-427c-9fb3-4e217b9a4d60
+        BoxesRcvd: "12"
+        WarehouseID: a908cef7-4c67-40f3-88f7-08a03ba4104a
+        ShipperID: Duan
+        Date: "Mar 9, 2022"
+        # _attachments: attachments/
+        # _rid: ldVkAP0fhCQGAAAAAAAAAA==
+        # id: "10"
+        # _self: dbs/ldVkAA==/colls/ldVkAP0fhCQ=/docs/ldVkAP0fhCQGAAAAAAAAAA==/
+        # _etag: \\"7e007215-0000-0100-0000-640e84690000\\"
+        # _ts: 1678673001
+      required:
+        - Date
+        - WarehouseID
+        - ShippingPO
+        - ShipmentID
+        - ShipperID
+        - BoxesRcvd
+        
+    PostDocument:
+      type: object
+      properties:
+        Received:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingItem' 
+      # example:
+      #   Received: 
+      #     items:
+      #       $ref: '#/components/schemas/ShippingItem' 
+          
+
+
+  securitySchemes:
+    code:
+      type: apiKey
+      name: x-functions-key
+      in: header
